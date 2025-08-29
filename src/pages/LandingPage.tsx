@@ -215,7 +215,7 @@ print(f"Fibonacci(8) = {fibonacci(8)}")
             <div className="md:col-span-2">
               <h3 className="text-2xl font-bold mb-6 flex items-center">
                 <Code2 className="w-8 h-8 mr-3 text-primary-blue" />
-                CodeRunner
+                BuddyCode
               </h3>
               <p className="text-gray-400 text-lg leading-relaxed mb-6 max-w-md">
                 Professional online coding platform designed for developers, students, and educators. 

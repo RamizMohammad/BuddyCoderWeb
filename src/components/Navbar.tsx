@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Code2, Menu, X } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,7 +20,7 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <Code2 className="w-8 h-8 text-blue-400" />
-            <span className="text-xl font-bold">CodeRunner</span>
+            <span className="text-xl font-bold">BuddyCode</span>
           </Link>
 
           {/* Desktop Navigation */}
