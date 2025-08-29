@@ -185,7 +185,7 @@ const EditorPage: React.FC = () => {
               isConnected ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
             }`}>
               {isConnected ? <Wifi className="w-3 h-3" /> : <WifiOff className="w-3 h-3" />}
-              <span>{isConnected ? 'Connected' : 'Disconnected'}</span>
+              <span>{isConnected ? 'Server Connected' : 'Server Disconnected'}</span>
             </div>
 
             <motion.button
