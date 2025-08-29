@@ -1,9 +1,9 @@
+import { motion } from 'framer-motion';
+import { Code2, Coffee, FileCode, Github, Globe, Linkedin, Play, Settings, Terminal, Twitter, Wrench, Zap } from 'lucide-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Code2, Play, Terminal, Globe, Github, Twitter, Linkedin, Coffee, Zap, Settings, Wrench, FileCode } from 'lucide-react';
-import Navbar from '../components/Navbar';
 import FeatureCard from '../components/FeatureCard';
+import Navbar from '../components/Navbar';
 
 const languages = [
   { 
@@ -223,19 +223,19 @@ print(f"Fibonacci(8) = {fibonacci(8)}")
               </p>
               <div className="flex space-x-4">
                 <a 
-                  href="#" 
+                  href="https://github.com/RamizMohammad" 
                   className="w-12 h-12 bg-gray-700 hover:bg-primary-blue rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
                 >
                   <Github className="w-6 h-6" />
                 </a>
                 <a 
-                  href="#" 
+                  href="https://x.com/Mohammad__Ramiz" 
                   className="w-12 h-12 bg-gray-700 hover:bg-blue-400 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
                 >
                   <Twitter className="w-6 h-6" />
                 </a>
                 <a 
-                  href="#" 
+                  href="https://www.linkedin.com/in/mohammad-ramiz-886468217/" 
                   className="w-12 h-12 bg-gray-700 hover:bg-blue-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
                 >
                   <Linkedin className="w-6 h-6" />
@@ -250,26 +250,11 @@ print(f"Fibonacci(8) = {fibonacci(8)}")
                 <li><Link to="/editor" className="hover:text-white transition-colors duration-200">Editor</Link></li>
                 <li><a href="#features" className="hover:text-white transition-colors duration-200">Features</a></li>
                 <li><a href="#about" className="hover:text-white transition-colors duration-200">About</a></li>
-                <li><a href="#" className="hover:text-white transition-colors duration-200">Documentation</a></li>
-                <li><a href="#" className="hover:text-white transition-colors duration-200">Support</a></li>
               </ul>
             </div>
-            
-            <div>
-              <h4 className="font-semibold text-lg mb-6 text-gray-200">Resources</h4>
-              <ul className="space-y-3 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors duration-200">Tutorials</a></li>
-                <li><a href="#" className="hover:text-white transition-colors duration-200">Examples</a></li>
-                <li><a href="#" className="hover:text-white transition-colors duration-200">API Reference</a></li>
-                <li><a href="#" className="hover:text-white transition-colors duration-200">Community</a></li>
-                <li><a href="#" className="hover:text-white transition-colors duration-200">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition-colors duration-200">Changelog</a></li>
-              </ul>
-            </div>
-          </div>
           
           <div className="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
-            <p className="text-lg">&copy; 2025 CodeRunner. All rights reserved.</p>
+            <p className="text-lg">&copy; ❤️ Developed By Mohammad Ramiz | All Right Reserved ❤️</p>
           </div>
         </div>
       </footer>
