@@ -19,57 +19,14 @@ const languages: Language[] = [
     label: 'Python',
     extension: '.py',
     defaultCode: `# Welcome to CodeRunner - Python Edition
-print("Hello, World!")
-
-def fibonacci(n):
-    """Calculate fibonacci sequence"""
-    if n <= 1:
-        return n
-    return fibonacci(n-1) + fibonacci(n-2)
-
-# Test the function
-for i in range(10):
-    print(f"Fibonacci({i}) = {fibonacci(i)}")
-
-# List comprehension example
-squares = [x**2 for x in range(1, 6)]
-print(f"Squares: {squares}")
-
-# Dictionary example
-person = {"name": "CodeRunner", "version": "2025", "language": "Python"}
-print(f"Platform: {person}")
-`
+print("Hello, World!")`
   },
   {
     value: 'javascript',
     label: 'JavaScript',
     extension: '.js',
     defaultCode: `// Welcome to CodeRunner - JavaScript Edition
-console.log("Hello, World!");
-
-function fibonacci(n) {
-    if (n <= 1) return n;
-    return fibonacci(n-1) + fibonacci(n-2);
-}
-
-// Test the function
-for (let i = 0; i < 10; i++) {
-    console.log(\`Fibonacci(\${i}) = \${fibonacci(i)}\`);
-}
-
-// Modern ES6+ features
-const squares = Array.from({length: 5}, (_, i) => (i+1)**2);
-console.log(\`Squares: \${squares}\`);
-
-// Arrow function example
-const greet = name => \`Hello, \${name}! Welcome to CodeRunner.\`;
-console.log(greet("Developer"));
-
-// Object destructuring
-const platform = { name: "CodeRunner", year: 2025, tech: "JavaScript" };
-const { name, year, tech } = platform;
-console.log(\`Platform: \${name} (\${year}) - \${tech}\`);
-`
+console.log("Hello, World!");`
   },
   {
     value: 'java',
@@ -79,37 +36,6 @@ console.log(\`Platform: \${name} (\${year}) - \${tech}\`);
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
-        
-        // Test fibonacci function
-        System.out.println("\\nFibonacci Sequence:");
-        for (int i = 0; i < 10; i++) {
-            System.out.println("Fibonacci(" + i + ") = " + fibonacci(i));
-        }
-        
-        // Array example
-        System.out.println("\\nSquares Array:");
-        int[] squares = new int[5];
-        for (int i = 0; i < 5; i++) {
-            squares[i] = (i + 1) * (i + 1);
-        }
-        
-        System.out.print("Squares: [");
-        for (int i = 0; i < squares.length; i++) {
-            System.out.print(squares[i]);
-            if (i < squares.length - 1) System.out.print(", ");
-        }
-        System.out.println("]");
-        
-        // Object example
-        System.out.println("\\nPlatform Info:");
-        System.out.println("Name: CodeRunner");
-        System.out.println("Year: 2025");
-        System.out.println("Language: Java");
-    }
-    
-    public static int fibonacci(int n) {
-        if (n <= 1) return n;
-        return fibonacci(n-1) + fibonacci(n-2);
     }
 }
 `
@@ -122,46 +48,11 @@ public class Main {
 #include <iostream>
 #include <vector>
 #include <string>
-using namespace std;
 
-int fibonacci(int n) {
-    if (n <= 1) return n;
-    return fibonacci(n-1) + fibonacci(n-2);
-}
+using namespace std;
 
 int main() {
     cout << "Hello, World!" << endl;
-    
-    // Test fibonacci function
-    cout << "\\nFibonacci Sequence:" << endl;
-    for (int i = 0; i < 10; i++) {
-        cout << "Fibonacci(" << i << ") = " << fibonacci(i) << endl;
-    }
-    
-    // Vector example
-    cout << "\\nSquares Vector:" << endl;
-    vector<int> squares;
-    for (int i = 1; i <= 5; i++) {
-        squares.push_back(i * i);
-    }
-    
-    cout << "Squares: [";
-    for (size_t i = 0; i < squares.size(); i++) {
-        cout << squares[i];
-        if (i < squares.size() - 1) cout << ", ";
-    }
-    cout << "]" << endl;
-    
-    // String example
-    cout << "\\nPlatform Info:" << endl;
-    string platform = "CodeRunner";
-    int year = 2025;
-    string language = "C++";
-    
-    cout << "Name: " << platform << endl;
-    cout << "Year: " << year << endl;
-    cout << "Language: " << language << endl;
-    
     return 0;
 }
 `
@@ -174,40 +65,8 @@ int main() {
 #include <stdio.h>
 #include <stdlib.h>
 
-int fibonacci(int n) {
-    if (n <= 1) return n;
-    return fibonacci(n-1) + fibonacci(n-2);
-}
-
 int main() {
     printf("Hello, World!\\n");
-    
-    // Test fibonacci function
-    printf("\\nFibonacci Sequence:\\n");
-    for (int i = 0; i < 10; i++) {
-        printf("Fibonacci(%d) = %d\\n", i, fibonacci(i));
-    }
-    
-    // Array example
-    printf("\\nSquares Array:\\n");
-    int squares[5];
-    for (int i = 0; i < 5; i++) {
-        squares[i] = (i + 1) * (i + 1);
-    }
-    
-    printf("Squares: [");
-    for (int i = 0; i < 5; i++) {
-        printf("%d", squares[i]);
-        if (i < 4) printf(", ");
-    }
-    printf("]\\n");
-    
-    // Platform info
-    printf("\\nPlatform Info:\\n");
-    printf("Name: CodeRunner\\n");
-    printf("Year: 2025\\n");
-    printf("Language: C\\n");
-    
     return 0;
 }
 `
