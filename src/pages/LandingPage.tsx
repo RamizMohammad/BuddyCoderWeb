@@ -252,7 +252,12 @@ print(f"Fibonacci(8) = {fibonacci(8)}")
                 <li><a href="#about" className="hover:text-white transition-colors duration-200">About</a></li>
               </ul>
             </div>
-          
+            
+            {/* The code was missing a closing tag for the grid div here.
+                Additionally, the copyright section makes more sense outside of the grid. 
+                I've closed the grid and moved the copyright below it. */}
+          </div>
+        
           <div className="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
             <p className="text-lg">&copy; ❤️ Developed By Mohammad Ramiz | All Right Reserved ❤️</p>
           </div>
