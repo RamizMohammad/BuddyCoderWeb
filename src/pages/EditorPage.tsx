@@ -18,21 +18,21 @@ const languages: Language[] = [
     value: 'python',
     label: 'Python',
     extension: '.py',
-    defaultCode: `# Welcome to CodeRunner - Python Edition
+    defaultCode: `# Welcome to BuddyCode - Python Edition
 print("Hello, World!")`
   },
   {
     value: 'javascript',
     label: 'JavaScript',
     extension: '.js',
-    defaultCode: `// Welcome to CodeRunner - JavaScript Edition
+    defaultCode: `// Welcome to BuddyCode - JavaScript Edition
 console.log("Hello, World!");`
   },
   {
     value: 'java',
     label: 'Java',
     extension: '.java',
-    defaultCode: `// Welcome to CodeRunner - Java Edition
+    defaultCode: `// Welcome to BuddyCode - Java Edition
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
@@ -44,7 +44,7 @@ public class Main {
     value: 'cpp',
     label: 'C++',
     extension: '.cpp',
-    defaultCode: `// Welcome to CodeRunner - C++ Edition
+    defaultCode: `// Welcome to BuddyCode - C++ Edition
 #include <iostream>
 #include <vector>
 #include <string>
@@ -61,7 +61,7 @@ int main() {
     value: 'c',
     label: 'C',
     extension: '.c',
-    defaultCode: `// Welcome to CodeRunner - C Edition
+    defaultCode: `// Welcome to BuddyCode - C Edition
 #include <stdio.h>
 #include <stdlib.h>
 
