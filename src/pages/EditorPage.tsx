@@ -88,7 +88,7 @@ const EditorPage: React.FC = () => {
 
   const checkBackendConnection = async () => {
     try {
-      const response = await fetch('https://buddycoderserver.onrender.com/health');
+      const response = await fetch('https://buddycoderserver-d8iy.onrender.com/health');
       if (response.ok) {
         setIsConnected(true);
       }
@@ -115,7 +115,7 @@ const EditorPage: React.FC = () => {
     setError('');
 
     try {
-      const response = await fetch('https://buddycoderserver.onrender.com/run', {
+      const response = await fetch('https://buddycoderserver-d8iy.onrender.com/run', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
