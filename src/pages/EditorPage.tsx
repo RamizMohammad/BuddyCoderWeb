@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import CodeEditor from '../components/CodeEditor';
 import LanguageSelector from '../components/LanguageSelector';
 import OutputPanel from '../components/OutputPanel';
+import SeoTags from "../components/SeoTags"; // ✅ Added SEO component
 
 export interface Language {
   value: string;
@@ -141,7 +142,7 @@ const EditorPage: React.FC = () => {
         }
       }
     } catch (err) {
-      setError('Failed to connect to backend server. Please ensure the Python server is running on port 5000.');
+      setError('Failed to connect to backend server. Please ensure the Python server is running.');
       setIsConnected(false);
     } finally {
       setIsRunning(false);
@@ -155,6 +156,14 @@ const EditorPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-material-dark text-white">
+      {/* ✅ SEO TAGS for Editor Page */}
+      <SeoTags
+        title="BuddyCode Online Editor - Write, Compile & Run Code Instantly"
+        description="Use BuddyCode's powerful online editor to code in Python, Java, C, C++, and JavaScript. Compile and run instantly with zero setup."
+        url="https://your-domain.com/editor"
+        keywords="online code editor, online compiler, python editor, java compiler, c++ online, javascript editor, buddycode"
+      />
+
       {/* Header */}
       <header className="bg-surface border-b border-gray-700 px-6 py-4 shadow-lg">
         <div className="flex items-center justify-between max-w-full">
@@ -169,7 +178,7 @@ const EditorPage: React.FC = () => {
             <div className="w-px h-6 bg-gray-600"></div>
             <div className="flex items-center space-x-3">
               <Code2 className="w-6 h-6 text-primary-blue" />
-              <h1 className="text-xl font-bold">CodeRunner</h1>
+              <h1 className="text-xl font-bold">BuddyCode Editor</h1>
             </div>
             <div className="w-px h-6 bg-gray-600 hidden md:block"></div>
             <LanguageSelector 

@@ -4,6 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import FeatureCard from '../components/FeatureCard';
 import Navbar from '../components/Navbar';
+import SeoTags from "../components/SeoTags";
 
 const languages = [
   { 
@@ -46,6 +47,13 @@ const languages = [
 const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-material-dark text-white">
+      {/* ✅ SEO TAGS at top */}
+      <SeoTags
+        title="BuddyCode - Online Compiler for Java, Python, C, C++, JavaScript"
+        description="BuddyCode is a free online compiler and IDE for Java, Python, C, C++, and JavaScript. Run code instantly in your browser."
+        url="https://your-domain.com/"
+      />
+
       <Navbar />
       
       {/* Hero Section */}
@@ -100,7 +108,9 @@ const LandingPage: React.FC = () => {
             className="text-center mb-20"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Supported Languages</h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">Choose from our carefully selected programming languages, each optimized for the best coding experience</p>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Choose from our carefully selected programming languages, each optimized for the best coding experience
+            </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-7xl mx-auto">
@@ -123,13 +133,14 @@ const LandingPage: React.FC = () => {
       <section id="about" className="py-24">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-20 items-center max-w-7xl mx-auto">
+            {/* Left side */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-8">Why Choose CodeRunner?</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-8">Why Choose BuddyCode?</h2>
               <p className="text-lg text-gray-300 mb-8 leading-relaxed">
                 Our platform provides a seamless coding experience with real-time compilation, 
                 professional syntax highlighting, and instant feedback. Perfect for learning, 
@@ -166,6 +177,7 @@ const LandingPage: React.FC = () => {
               </div>
             </motion.div>
             
+            {/* Right side - terminal window */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -173,7 +185,6 @@ const LandingPage: React.FC = () => {
               viewport={{ once: true }}
               className="bg-surface rounded-3xl p-8 border border-gray-700 relative overflow-hidden"
             >
-              {/* Terminal window decoration */}
               <div className="flex items-center mb-6">
                 <div className="flex space-x-2">
                   <div className="w-3 h-3 bg-red-500 rounded-full"></div>
@@ -186,7 +197,7 @@ const LandingPage: React.FC = () => {
                 <div className="text-accent-teal mb-2">$ python hello.py</div>
                 <pre className="text-green-400 text-sm leading-relaxed">
 {`def greet(name):
-    return f"Welcome to CodeRunner, {name}!"
+    return f"Welcome to BuddyCode, {name}!"
 
 def fibonacci(n):
     if n <= 1:
@@ -196,12 +207,10 @@ def fibonacci(n):
 print(greet("Developer"))
 print(f"Fibonacci(8) = {fibonacci(8)}")
 
-> Welcome to CodeRunner, Developer!
+> Welcome to BuddyCode, Developer!
 > Fibonacci(8) = 21`}
                 </pre>
               </div>
-              
-              {/* Glow effect */}
               <div className="absolute -top-4 -right-4 w-32 h-32 bg-primary-blue/20 rounded-full blur-3xl"></div>
             </motion.div>
           </div>
@@ -222,22 +231,13 @@ print(f"Fibonacci(8) = {fibonacci(8)}")
                 Experience the future of collaborative programming.
               </p>
               <div className="flex space-x-4">
-                <a 
-                  href="https://github.com/RamizMohammad" 
-                  className="w-12 h-12 bg-gray-700 hover:bg-primary-blue rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
-                >
+                <a href="https://github.com/RamizMohammad" className="w-12 h-12 bg-gray-700 hover:bg-primary-blue rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110">
                   <Github className="w-6 h-6" />
                 </a>
-                <a 
-                  href="https://x.com/Mohammad__Ramiz" 
-                  className="w-12 h-12 bg-gray-700 hover:bg-blue-400 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
-                >
+                <a href="https://x.com/Mohammad__Ramiz" className="w-12 h-12 bg-gray-700 hover:bg-blue-400 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110">
                   <Twitter className="w-6 h-6" />
                 </a>
-                <a 
-                  href="https://www.linkedin.com/in/mohammad-ramiz-886468217/" 
-                  className="w-12 h-12 bg-gray-700 hover:bg-blue-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
-                >
+                <a href="https://www.linkedin.com/in/mohammad-ramiz-886468217/" className="w-12 h-12 bg-gray-700 hover:bg-blue-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110">
                   <Linkedin className="w-6 h-6" />
                 </a>
               </div>
@@ -246,16 +246,12 @@ print(f"Fibonacci(8) = {fibonacci(8)}")
             <div>
               <h4 className="font-semibold text-lg mb-6 text-gray-200">Quick Links</h4>
               <ul className="space-y-3 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors duration-200">Home</a></li>
+                <li><a href="/" className="hover:text-white transition-colors duration-200">Home</a></li>
                 <li><Link to="/editor" className="hover:text-white transition-colors duration-200">Editor</Link></li>
                 <li><a href="#features" className="hover:text-white transition-colors duration-200">Features</a></li>
                 <li><a href="#about" className="hover:text-white transition-colors duration-200">About</a></li>
               </ul>
             </div>
-            
-            {/* The code was missing a closing tag for the grid div here.
-                Additionally, the copyright section makes more sense outside of the grid. 
-                I've closed the grid and moved the copyright below it. */}
           </div>
         
           <div className="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
