@@ -1,10 +1,13 @@
 import { motion } from 'framer-motion';
-import { Code2, Menu, X } from 'lucide-react';
+import { Code2, LogIn, LogOut, Menu, UserPlus, X } from 'lucide-react';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
 
   const navItems = [
     { label: 'Home', href: '/' },
@@ -13,18 +16,22 @@ const Navbar: React.FC = () => {
     { label: 'Contact', href: '#contact' }
   ];
 
+  const handleLogout = () => {
+    logout();
+    setIsMenuOpen(false);
+    navigate('/');
+  };
+
   return (
     <nav className="bg-gray-800 border-b border-gray-700 relative z-50">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <Code2 className="w-8 h-8 text-blue-400" />
             <span className="text-xl font-bold">BuddyCode</span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-4">
             {navItems.map((item) => (
               <a
                 key={item.label}
@@ -36,13 +43,38 @@ const Navbar: React.FC = () => {
             ))}
             <Link
               to="/editor"
-              className="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition-colors duration-200"
+              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition-colors duration-200"
             >
-              Start Coding
+              Editor
             </Link>
+            {isAuthenticated ? (
+              <button
+                onClick={handleLogout}
+                className="flex items-center px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg font-medium transition-colors duration-200"
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="flex items-center px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg font-medium transition-colors duration-200"
+                >
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="flex items-center px-4 py-2 bg-accent-teal hover:bg-teal-600 rounded-lg font-medium transition-colors duration-200"
+                >
+                  <UserPlus className="w-4 h-4 mr-2" />
+                  Register
+                </Link>
+              </>
+            )}
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden text-gray-400 hover:text-white transition-colors"
@@ -51,12 +83,11 @@ const Navbar: React.FC = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         <motion.div
           initial={{ opacity: 0, height: 0 }}
-          animate={{ 
-            opacity: isMenuOpen ? 1 : 0, 
-            height: isMenuOpen ? 'auto' : 0 
+          animate={{
+            opacity: isMenuOpen ? 1 : 0,
+            height: isMenuOpen ? 'auto' : 0
           }}
           transition={{ duration: 0.2 }}
           className="md:hidden overflow-hidden"
@@ -77,8 +108,36 @@ const Navbar: React.FC = () => {
               className="block px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded font-medium transition-colors text-center"
               onClick={() => setIsMenuOpen(false)}
             >
-              Start Coding
+              Editor
             </Link>
+            {isAuthenticated ? (
+              <button
+                onClick={handleLogout}
+                className="flex items-center w-full px-4 py-2 bg-red-500/20 text-red-400 rounded transition-colors"
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="flex items-center px-4 py-2 bg-gray-700 rounded transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="flex items-center px-4 py-2 bg-accent-teal rounded transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <UserPlus className="w-4 h-4 mr-2" />
+                  Register
+                </Link>
+              </>
+            )}
           </div>
         </motion.div>
       </div>
