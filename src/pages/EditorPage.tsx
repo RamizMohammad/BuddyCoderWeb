@@ -1,20 +1,20 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import {
-  ArrowLeft,
-  Check,
-  Code2,
-  Download,
-  Edit2,
-  FileCode,
-  LogIn,
-  Menu,
-  Play,
-  Save,
-  Square,
-  Trash2,
-  Wifi,
-  WifiOff,
-  X,
+    ArrowLeft,
+    Check,
+    Code2,
+    Download,
+    Edit2,
+    FileCode,
+    LogIn,
+    Menu,
+    Play,
+    Save,
+    Square,
+    Trash2,
+    Wifi,
+    WifiOff,
+    X,
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -130,7 +130,7 @@ const EditorPage: React.FC = () => {
 
   const checkBackendConnection = async () => {
     try {
-      const response = await fetch('https://buddycoderserver.onrender.com/health');
+      const response = await fetch('https://api.server.buddycode.online/health');
       if (response.ok) setIsConnected(true);
     } catch {
       setIsConnected(false);
@@ -155,7 +155,7 @@ const EditorPage: React.FC = () => {
     setError('');
 
     try {
-      const response = await fetch('https://buddycoderserver.onrender.com/run', {
+      const response = await fetch('https://api.server.buddycode.online/run', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ language: selectedLanguage.value, code }),
@@ -186,7 +186,7 @@ const EditorPage: React.FC = () => {
     setFilesError('');
 
     try {
-      const response = await fetch('https://buddycoderserver.onrender.com/files', {
+      const response = await fetch('https://api.server.buddycode.online/files', {
         headers: { Authorization: `Bearer ${user?.token}` },
       });
 
@@ -209,7 +209,7 @@ const EditorPage: React.FC = () => {
     console.log('📥 Downloading file:', fileId);
 
     try {
-      const response = await fetch(`https://buddycoderserver.onrender.com/download/${fileId}`, {
+      const response = await fetch(`https://api.server.buddycode.online/download/${fileId}`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       });
 
@@ -247,7 +247,7 @@ const EditorPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch(`https://buddycoderserver.onrender.com/files/${fileId}/rename`, {
+      const response = await fetch(`https://api.server.buddycode.online/files/${fileId}/rename`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${user?.token}`,
@@ -291,7 +291,7 @@ const EditorPage: React.FC = () => {
       const formData = new FormData();
       formData.append('file', blob, filename);
 
-      const response = await fetch('https://buddycoderserver.onrender.com/upload', {
+      const response = await fetch('https://api.server.buddycode.online/upload', {
         method: 'POST',
         headers: { Authorization: `Bearer ${user?.token}` },
         body: formData,

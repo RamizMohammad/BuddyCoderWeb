@@ -29,7 +29,7 @@ const RegisterPage: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('https://buddycoderserver.onrender.com/register', {
+      const response = await fetch('https://api.server.buddycode.online/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
