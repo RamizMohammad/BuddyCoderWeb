@@ -1,20 +1,20 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import {
-    ArrowLeft,
-    Check,
-    Code2,
-    Download,
-    Edit2,
-    FileCode,
-    LogIn,
-    Menu,
-    Play,
-    Save,
-    Square,
-    Trash2,
-    Wifi,
-    WifiOff,
-    X,
+  ArrowLeft,
+  Check,
+  Code2,
+  Download,
+  Edit2,
+  FileCode,
+  LogIn,
+  Menu,
+  Play,
+  Save,
+  Square,
+  Trash2,
+  Wifi,
+  WifiOff,
+  X,
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -116,12 +116,10 @@ const EditorPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  // ✅ Check backend connection on mount
   useEffect(() => {
     checkBackendConnection();
   }, []);
 
-  // ✅ Fetch files when side panel opens
   useEffect(() => {
     if (isAuthenticated && isSidePanelOpen) {
       fetchFiles();
@@ -144,6 +142,7 @@ const EditorPage: React.FC = () => {
     setError('');
   };
 
+  // ✅ Updated to match new backend response: { output, stderr, exit_code }
   const runCode = async () => {
     if (!isConnected) {
       setError('Backend server is not running.');
@@ -162,11 +161,25 @@ const EditorPage: React.FC = () => {
       });
 
       const result = await response.json();
-      if (result.error) setError(result.error);
-      else {
-        const stdout = result.run?.stdout || '';
-        const stderr = result.run?.stderr || '';
-        setOutput(stdout.trim() || stderr.trim() ? `${stdout}${stderr}` : 'Code executed successfully with no output');
+
+      if (result.error) {
+        setError(result.error);
+      } else {
+        const stdout = result.output || '';
+        const stderr = result.stderr || '';
+
+        if (stderr && !stdout) {
+          setError(stderr);
+        } else if (stdout) {
+          setOutput(stdout);
+        } else {
+          setOutput('Code executed successfully with no output');
+        }
+
+        // Show exit code error if non-zero and no stderr shown yet
+        if (result.exit_code !== '0' && result.exit_code !== null && !stderr) {
+          setError(`Process exited with code ${result.exit_code}`);
+        }
       }
     } catch {
       setError('Failed to connect to backend server.');
@@ -205,8 +218,6 @@ const EditorPage: React.FC = () => {
       setFilesError('Invalid file ID');
       return;
     }
-
-    console.log('📥 Downloading file:', fileId);
 
     try {
       const response = await fetch(`https://api.server.buddycode.online/download/${fileId}`, {
@@ -310,7 +321,6 @@ const EditorPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-material-dark text-white">
-      {/* ✅ SEO TAGS */}
       <SeoTags
         title="BuddyCode Online Editor - Write, Compile & Run Code Instantly"
         description="Use BuddyCode's powerful online editor to code in Python, Java, C, C++, and JavaScript. Compile and run instantly with zero setup."
@@ -433,7 +443,6 @@ const EditorPage: React.FC = () => {
 
       {/* Main Editor Area */}
       <div className="flex h-[calc(100vh-88px)] relative">
-        {/* Code Editor */}
         <div className="flex-1 border-r border-gray-700 flex flex-col">
           <div className="flex-1 overflow-hidden">
             <CodeEditor language={selectedLanguage} code={code} onChange={setCode} />
