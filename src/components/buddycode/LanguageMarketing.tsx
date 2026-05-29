@@ -14,6 +14,7 @@ interface LangMeta {
   Icon: ComponentType<{ className?: string }>;
   gradient: string;
   bullets: string[];
+  sample: string;
 }
 
 export const LANG_META: Record<string, LangMeta> = {
@@ -28,6 +29,7 @@ export const LANG_META: Record<string, LangMeta> = {
     Icon: FileCode,
     gradient: "from-emerald-400 to-sky-500",
     bullets: ["Python 3.12 runtime", "Print, input & full stdlib", "Stdout, stderr & exit codes"],
+    sample: `def greet(name):\n    return f"Hello, {name}"\n\nprint(greet("BuddyCode"))`,
   },
   javascript: {
     slug: "javascript",
@@ -40,6 +42,7 @@ export const LANG_META: Record<string, LangMeta> = {
     Icon: Zap,
     gradient: "from-amber-400 to-orange-500",
     bullets: ["ES2022+ support", "Console output", "Instant execution"],
+    sample: `const tools = ["editor", "runner", "files"];\nconsole.log(tools.join(" + "));`,
   },
   java: {
     slug: "java",
@@ -52,6 +55,7 @@ export const LANG_META: Record<string, LangMeta> = {
     Icon: Coffee,
     gradient: "from-rose-400 to-pink-500",
     bullets: ["Modern JDK", "Full standard library", "Beautiful Monaco editor"],
+    sample: `public class Main {\n  public static void main(String[] args) {\n    System.out.println("Hello BuddyCode");\n  }\n}`,
   },
   cpp: {
     slug: "cpp",
@@ -64,6 +68,7 @@ export const LANG_META: Record<string, LangMeta> = {
     Icon: Settings,
     gradient: "from-indigo-400 to-violet-500",
     bullets: ["Modern C++ compiler", "STL support", "Instant feedback"],
+    sample: `#include <iostream>\nusing namespace std;\n\nint main() {\n  cout << "Hello BuddyCode";\n}`,
   },
   c: {
     slug: "c",
@@ -76,6 +81,7 @@ export const LANG_META: Record<string, LangMeta> = {
     Icon: Wrench,
     gradient: "from-slate-400 to-zinc-500",
     bullets: ["GCC-class compiler", "stdio & stdlib", "Beautiful editor"],
+    sample: `#include <stdio.h>\n\nint main() {\n  printf("Hello BuddyCode\\n");\n  return 0;\n}`,
   },
 };
 
@@ -85,30 +91,48 @@ export function LanguageMarketing({ slug }: { slug: keyof typeof LANG_META }) {
   return (
     <div className="min-h-dvh">
       <Navbar />
-      <section className="mx-auto max-w-5xl px-4 pb-20 pt-16 sm:px-6 sm:pt-24">
-        <div className="flex flex-col items-center text-center">
-          <span className={`grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br ${m.gradient} shadow-2xl ring-1 ring-white/10`}>
-            <Icon className="h-8 w-8 text-white" />
-          </span>
-          <p className="mt-5 font-mono text-xs uppercase tracking-widest text-primary">
-            {m.name} on BuddyCode
-          </p>
-          <h1 className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
-            {m.tagline}
-          </h1>
-          <p className="mt-4 max-w-xl text-muted-foreground">{m.description}</p>
+      <section className="mx-auto max-w-6xl px-4 pb-20 pt-14 sm:px-6 sm:pt-24">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <span className={`grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br ${m.gradient} shadow-2xl ring-1 ring-white/10`}>
+              <Icon className="h-8 w-8 text-white" />
+            </span>
+            <p className="mt-5 font-mono text-xs uppercase tracking-widest text-primary">
+              {m.name} on BuddyCode
+            </p>
+            <h1 className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
+              {m.tagline}
+            </h1>
+            <p className="mt-4 max-w-xl text-muted-foreground">{m.description}</p>
 
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-            <Button asChild size="lg" className="h-12 px-6 text-base">
-              <Link to="/editor">
-                Open {m.name} editor <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="h-12 px-6 text-base bg-card/60">
-              <Link to="/">
-                <Code2 className="h-4 w-4" /> All languages
-              </Link>
-            </Button>
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <Button asChild size="lg" className="h-12 px-6 text-base">
+                <Link to="/editor">
+                  Open {m.name} editor <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="h-12 px-6 text-base bg-card/60">
+                <Link to="/">
+                  <Code2 className="h-4 w-4" /> All languages
+                </Link>
+              </Button>
+            </div>
+          </div>
+
+          <div className="ring-glow overflow-hidden rounded-2xl border border-border bg-card">
+            <div className="flex items-center justify-between border-b border-border bg-surface px-4 py-2.5">
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-red-500/80" />
+                <span className="h-3 w-3 rounded-full bg-amber-400/80" />
+                <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
+              </div>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                main{m.slug === "javascript" ? ".js" : m.slug === "python" ? ".py" : m.slug === "java" ? ".java" : m.slug === "cpp" ? ".cpp" : ".c"}
+              </span>
+            </div>
+            <pre className="min-h-64 overflow-auto bg-[#0d1117] p-5 font-mono text-sm leading-relaxed text-foreground/90">
+              {m.sample}
+            </pre>
           </div>
         </div>
 

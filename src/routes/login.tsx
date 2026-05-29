@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { ArrowLeft, Code2, Eye, EyeOff, LogIn } from "lucide-react";
+import { ArrowLeft, Code2, Eye, EyeOff, LogIn, Terminal } from "lucide-react";
 import { useState } from "react";
 import { useAuth, API_BASE } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -53,28 +53,30 @@ function LoginPage() {
   };
 
   return (
-    <div className="relative grid min-h-dvh place-items-center px-4 py-10">
+    <div className="relative min-h-dvh overflow-hidden px-4 py-10">
+      <div className="pointer-events-none bg-grid absolute inset-0 opacity-30 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
       <Link
         to="/"
-        className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-sm text-muted-foreground hover:text-foreground"
+        className="absolute left-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-sm text-muted-foreground hover:text-foreground"
       >
         <ArrowLeft className="h-4 w-4" /> Back
       </Link>
 
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="w-full max-w-md"
-      >
-        <div className="ring-glow rounded-2xl border border-border bg-card p-7 shadow-2xl sm:p-9">
-          <div className="mb-7 flex flex-col items-center text-center">
-            <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-primary to-accent ring-1 ring-white/10">
-              <Code2 className="h-6 w-6 text-white" />
-            </span>
-            <h1 className="mt-4 text-2xl font-bold tracking-tight">Welcome back</h1>
-            <p className="mt-1 text-sm text-muted-foreground">Sign in to continue to BuddyCode</p>
-          </div>
+      <div className="relative mx-auto grid min-h-[calc(100dvh-5rem)] max-w-6xl items-center gap-10 lg:grid-cols-[1fr_0.9fr]">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="w-full max-w-md justify-self-center lg:justify-self-start"
+        >
+          <div className="ring-glow rounded-2xl border border-border bg-card/90 p-7 shadow-2xl backdrop-blur sm:p-9">
+            <div className="mb-7 flex flex-col items-center text-center">
+              <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-primary to-accent ring-1 ring-white/10">
+                <Code2 className="h-6 w-6 text-white" />
+              </span>
+              <h1 className="mt-4 text-2xl font-bold tracking-tight">Welcome back</h1>
+              <p className="mt-1 text-sm text-muted-foreground">Sign in to continue to BuddyCode</p>
+            </div>
 
           {error && (
             <div
@@ -134,8 +136,37 @@ function LoginPage() {
               Create one
             </Link>
           </p>
-        </div>
-      </motion.div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 24 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="hidden lg:block"
+        >
+          <div className="ring-glow overflow-hidden rounded-2xl border border-border bg-card shadow-2xl">
+            <div className="flex items-center justify-between border-b border-border bg-surface px-4 py-2.5">
+              <div className="flex items-center gap-2">
+                <Terminal className="h-4 w-4 text-accent" />
+                <span className="text-sm font-medium">Saved workspace</span>
+              </div>
+              <span className="rounded bg-success/10 px-2 py-0.5 font-mono text-[10px] text-success">SYNCED</span>
+            </div>
+            <pre className="bg-[#0d1117] p-6 font-mono text-sm leading-relaxed text-foreground/90">
+{`// Pick up exactly where you left off
+const workspace = await buddycode.restore();
+
+workspace.files.map((file) => {
+  run(file.language, file.source);
+});
+
+> 12 snippets ready
+> backend online`}
+            </pre>
+          </div>
+        </motion.div>
+      </div>
     </div>
   );
 }

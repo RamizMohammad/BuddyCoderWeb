@@ -24,6 +24,7 @@ export function LanguageSelector({ languages, selected, onChange }: Props) {
   return (
     <div className="relative" ref={ref}>
       <button
+        type="button"
         onClick={() => setOpen((o) => !o)}
         className="flex w-full min-w-[180px] items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium transition hover:bg-surface-elevated focus:outline-none focus:ring-2 focus:ring-ring"
       >
@@ -42,12 +43,13 @@ export function LanguageSelector({ languages, selected, onChange }: Props) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 right-0 top-full z-50 mt-1 overflow-hidden rounded-lg border border-border bg-popover shadow-2xl ring-1 ring-black/40"
+            className="absolute left-0 right-0 top-full z-[100] mt-1 overflow-hidden rounded-lg border border-border bg-popover shadow-2xl ring-1 ring-black/40"
           >
             {languages.map((l) => {
               const active = l.value === selected.value;
               return (
                 <button
+                  type="button"
                   key={l.value}
                   onClick={() => {
                     onChange(l);

@@ -170,6 +170,28 @@
   }
 
   .ring-glow { box-shadow: 0 0 0 1px oklch(1 0 0 / 0.06), 0 20px 60px -20px var(--brand-glow); }
+
+  .code-reveal {
+    animation: code-reveal 3.4s steps(52, end) infinite alternate;
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .run-pulse {
+    animation: run-pulse 2.2s ease-in-out infinite;
+  }
 }
 
 html { color-scheme: dark; }
+
+@keyframes code-reveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes run-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 oklch(0.72 0.16 178 / 0.28); }
+  50% { box-shadow: 0 0 0 8px oklch(0.72 0.16 178 / 0); }
+}

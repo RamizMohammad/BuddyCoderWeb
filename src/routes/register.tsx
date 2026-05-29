@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { ArrowLeft, Code2, Eye, EyeOff, UserPlus } from "lucide-react";
+import { ArrowLeft, Code2, Eye, EyeOff, Sparkles, UserPlus } from "lucide-react";
 import { useState } from "react";
 import { API_BASE } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -53,30 +53,55 @@ function RegisterPage() {
   };
 
   return (
-    <div className="relative grid min-h-dvh place-items-center px-4 py-10">
+    <div className="relative min-h-dvh overflow-hidden px-4 py-10">
+      <div className="pointer-events-none bg-grid absolute inset-0 opacity-30 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
       <Link
         to="/"
-        className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-sm text-muted-foreground hover:text-foreground"
+        className="absolute left-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-sm text-muted-foreground hover:text-foreground"
       >
         <ArrowLeft className="h-4 w-4" /> Back
       </Link>
 
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="w-full max-w-md"
-      >
-        <div className="ring-glow rounded-2xl border border-border bg-card p-7 shadow-2xl sm:p-9">
-          <div className="mb-7 flex flex-col items-center text-center">
-            <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-primary to-accent ring-1 ring-white/10">
-              <Code2 className="h-6 w-6 text-white" />
+      <div className="relative mx-auto grid min-h-[calc(100dvh-5rem)] max-w-6xl items-center gap-10 lg:grid-cols-[0.9fr_1fr]">
+        <motion.div
+          initial={{ opacity: 0, x: -24 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="hidden lg:block"
+        >
+          <div className="ring-glow rounded-2xl border border-border bg-card/80 p-8 shadow-2xl backdrop-blur">
+            <span className="grid h-12 w-12 place-items-center rounded-xl bg-primary/10 text-primary">
+              <Sparkles className="h-6 w-6" />
             </span>
-            <h1 className="mt-4 text-2xl font-bold tracking-tight">Create your account</h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Start saving and organizing your code in seconds
-            </p>
+            <h2 className="mt-5 text-3xl font-bold tracking-tight">
+              Save every experiment. Return when the idea gets interesting.
+            </h2>
+            <div className="mt-7 grid gap-3 text-sm text-muted-foreground">
+              {["Cloud snippets with rename and download", "One editor for Python, JavaScript, Java, C and C++", "Fast command palette and focused console"].map((item) => (
+                <div key={item} className="rounded-lg border border-border bg-muted/30 px-4 py-3">
+                  {item}
+                </div>
+              ))}
+            </div>
           </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="w-full max-w-md justify-self-center lg:justify-self-end"
+        >
+          <div className="ring-glow rounded-2xl border border-border bg-card/90 p-7 shadow-2xl backdrop-blur sm:p-9">
+            <div className="mb-7 flex flex-col items-center text-center">
+              <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-primary to-accent ring-1 ring-white/10">
+                <Code2 className="h-6 w-6 text-white" />
+              </span>
+              <h1 className="mt-4 text-2xl font-bold tracking-tight">Create your account</h1>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Start saving and organizing your code in seconds
+              </p>
+            </div>
 
           {error && (
             <div
@@ -149,8 +174,9 @@ function RegisterPage() {
               Sign in
             </Link>
           </p>
-        </div>
-      </motion.div>
+          </div>
+        </motion.div>
+      </div>
     </div>
   );
 }

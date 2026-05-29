@@ -4,13 +4,17 @@ import {
   ArrowLeft,
   Check,
   ChevronRight,
-  Code2,
+  Clock3,
+  Command,
   Download,
   Edit2,
   FileCode,
   FolderOpen,
+  Keyboard,
   LogIn,
   Play,
+  RotateCcw,
+  Search,
   Save,
   Square,
   Trash2,
@@ -25,7 +29,18 @@ import { LanguageSelector } from "@/components/buddycode/LanguageSelector";
 import { OutputPanel } from "@/components/buddycode/OutputPanel";
 import { API_BASE, useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandShortcut,
+} from "@/components/ui/command";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { toast } from "sonner";
+import { LogoMark } from "@/components/buddycode/LogoMark";
 
 export const Route = createFileRoute("/editor")({
   head: () => ({
@@ -57,6 +72,9 @@ function EditorPage() {
   const [isConnected, setIsConnected] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
+  const [isCommandOpen, setIsCommandOpen] = useState(false);
+  const [lastRunMs, setLastRunMs] = useState<number | null>(null);
+  const [fileSearch, setFileSearch] = useState("");
   const [files, setFiles] = useState<FileItem[]>([]);
   const [filesLoading, setFilesLoading] = useState(false);
   const [filesError, setFilesError] = useState("");
@@ -99,6 +117,7 @@ function EditorPage() {
       return;
     }
     setIsRunning(true);
+    const startedAt = performance.now();
     setOutput("");
     setError("");
     try {
@@ -124,6 +143,7 @@ function EditorPage() {
       setError("Failed to connect to backend server.");
       setIsConnected(false);
     } finally {
+      setLastRunMs(Math.round(performance.now() - startedAt));
       setIsRunning(false);
     }
   };
@@ -220,12 +240,17 @@ function EditorPage() {
     });
   };
 
-  // Keyboard shortcuts: Ctrl/Cmd+Enter to run, Ctrl/Cmd+S to save
+  const filteredFiles = files.filter((file) =>
+    file.filename.toLowerCase().includes(fileSearch.toLowerCase().trim()),
+  );
+
+  // Keyboard shortcuts: Ctrl/Cmd+Enter to run, Ctrl/Cmd+S to save, Ctrl/Cmd+K for commands
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const meta = e.ctrlKey || e.metaKey;
       if (meta && e.key === "Enter") { e.preventDefault(); runCode(); }
       if (meta && e.key.toLowerCase() === "s") { e.preventDefault(); saveFile(); }
+      if (meta && e.key.toLowerCase() === "k") { e.preventDefault(); setIsCommandOpen((open) => !open); }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
@@ -235,7 +260,7 @@ function EditorPage() {
   return (
     <div className="flex h-dvh flex-col overflow-hidden bg-background text-foreground">
       {/* TOP BAR */}
-      <header className="border-b border-border bg-surface/90 backdrop-blur">
+      <header className="relative z-30 border-b border-border bg-surface/90 backdrop-blur">
         <div className="flex h-14 items-center gap-2 px-2 sm:gap-3 sm:px-4">
           <Link
             to="/"
@@ -246,9 +271,7 @@ function EditorPage() {
           </Link>
 
           <div className="flex items-center gap-2">
-            <span className="grid h-8 w-8 place-items-center rounded-md bg-gradient-to-br from-primary to-accent ring-1 ring-white/10">
-              <Code2 className="h-4 w-4 text-white" />
-            </span>
+            <LogoMark className="h-8 w-8 rounded-md" />
             <span className="hidden text-sm font-semibold sm:inline">
               Buddy<span className="text-gradient-brand">Code</span>
             </span>
@@ -267,6 +290,17 @@ function EditorPage() {
           </div>
 
           <div className="flex items-center gap-1.5 sm:gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsCommandOpen(true)}
+              className="hidden gap-2 border border-border bg-card/40 font-mono text-xs text-muted-foreground lg:inline-flex"
+            >
+              <Command className="h-3.5 w-3.5" />
+              Actions
+              <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 text-[10px]">⌘K</kbd>
+            </Button>
+
             <span
               className={`hidden items-center gap-1.5 rounded-md border px-2 py-1 text-[11px] font-medium lg:inline-flex ${
                 isConnected
@@ -327,31 +361,107 @@ function EditorPage() {
       </header>
 
       {/* MAIN */}
-      <div className="relative flex min-h-0 flex-1 flex-col md:flex-row">
-        <div className="flex min-h-0 flex-1 flex-col border-border md:border-r">
+      <div className="relative flex min-h-0 flex-1 flex-col">
+        <div className="hidden min-h-0 flex-1 md:block">
+          <ResizablePanelGroup direction="horizontal">
+            <ResizablePanel defaultSize={64} minSize={42}>
+              <CodeEditor language={selectedLanguage} code={code} onChange={setCode} />
+            </ResizablePanel>
+            <ResizableHandle withHandle className="bg-border/80" />
+            <ResizablePanel defaultSize={36} minSize={24}>
+              <OutputPanel
+                output={output}
+                error={error}
+                isRunning={isRunning}
+                onClear={clearOutput}
+                language={selectedLanguage.label}
+                runTimeMs={lastRunMs}
+              />
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        </div>
+
+        <div className="flex min-h-0 flex-1 flex-col md:hidden">
           <div className="min-h-0 flex-1">
             <CodeEditor language={selectedLanguage} code={code} onChange={setCode} />
           </div>
-          <div className="h-64 border-t border-border md:hidden">
+          <div className="h-72 border-t border-border">
             <OutputPanel
               output={output}
               error={error}
               isRunning={isRunning}
               onClear={clearOutput}
               language={selectedLanguage.label}
+              runTimeMs={lastRunMs}
             />
           </div>
         </div>
 
-        <div className="hidden min-h-0 md:block md:w-[42%] lg:w-[38%] xl:w-[34%]">
-          <OutputPanel
-            output={output}
-            error={error}
-            isRunning={isRunning}
-            onClear={clearOutput}
-            language={selectedLanguage.label}
-          />
+        <div className="flex h-8 items-center justify-between border-t border-border bg-surface px-3 font-mono text-[11px] text-muted-foreground">
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="truncate">{selectedLanguage.label} {selectedLanguage.extension}</span>
+            <span className="hidden sm:inline">{code.split("\n").length} lines</span>
+            <span className="hidden sm:inline">{code.length} chars</span>
+          </div>
+          <div className="flex items-center gap-3">
+            {lastRunMs !== null && (
+              <span className="hidden items-center gap-1 sm:inline-flex">
+                <Clock3 className="h-3 w-3" />
+                {lastRunMs}ms
+              </span>
+            )}
+            <span className={isConnected ? "text-success" : "text-destructive"}>
+              {isConnected ? "Backend online" : "Backend offline"}
+            </span>
+          </div>
         </div>
+
+        <CommandDialog open={isCommandOpen} onOpenChange={setIsCommandOpen}>
+          <CommandInput placeholder="Run, save, switch language..." />
+          <CommandList>
+            <CommandEmpty>No action found.</CommandEmpty>
+            <CommandGroup heading="Actions">
+              <CommandItem onSelect={() => { setIsCommandOpen(false); runCode(); }} disabled={isRunning || !isConnected}>
+                <Play className="h-4 w-4" /> Run code
+                <CommandShortcut>⌘↵</CommandShortcut>
+              </CommandItem>
+              <CommandItem onSelect={() => { setIsCommandOpen(false); saveFile(); }}>
+                <Save className="h-4 w-4" /> Save file
+                <CommandShortcut>⌘S</CommandShortcut>
+              </CommandItem>
+              <CommandItem onSelect={() => { setIsCommandOpen(false); clearOutput(); }}>
+                <Trash2 className="h-4 w-4" /> Clear console
+              </CommandItem>
+              <CommandItem onSelect={() => { setIsCommandOpen(false); setIsSidePanelOpen(true); }}>
+                <FolderOpen className="h-4 w-4" /> Open files
+              </CommandItem>
+              <CommandItem onSelect={() => { setIsCommandOpen(false); handleLanguageChange(selectedLanguage); }}>
+                <RotateCcw className="h-4 w-4" /> Reset starter code
+              </CommandItem>
+            </CommandGroup>
+            <CommandGroup heading="Languages">
+              {LANGUAGES.map((language) => (
+                <CommandItem
+                  key={language.value}
+                  onSelect={() => {
+                    handleLanguageChange(language);
+                    setIsCommandOpen(false);
+                  }}
+                >
+                  <span className="text-base">{language.emoji}</span>
+                  {language.label}
+                  <CommandShortcut>{language.extension}</CommandShortcut>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+            <CommandGroup heading="Shortcuts">
+              <CommandItem>
+                <Keyboard className="h-4 w-4" /> Command palette
+                <CommandShortcut>⌘K</CommandShortcut>
+              </CommandItem>
+            </CommandGroup>
+          </CommandList>
+        </CommandDialog>
 
         {/* FILES PANEL */}
         <AnimatePresence>
@@ -371,18 +481,36 @@ function EditorPage() {
                 transition={{ type: "spring", damping: 26, stiffness: 220 }}
                 className="fixed right-0 top-0 z-50 flex h-dvh w-full max-w-sm flex-col border-l border-border bg-card shadow-2xl"
               >
-                <div className="flex items-center justify-between border-b border-border px-4 py-3.5">
-                  <div className="flex items-center gap-2">
-                    <FolderOpen className="h-4 w-4 text-primary" />
-                    <h2 className="text-sm font-semibold">My Files</h2>
+                <div className="border-b border-border px-4 py-3.5">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <FolderOpen className="h-4 w-4 text-primary" />
+                      <h2 className="text-sm font-semibold">My Files</h2>
+                      {isAuthenticated && (
+                        <span className="rounded bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+                          {files.length}
+                        </span>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => setIsSidePanelOpen(false)}
+                      aria-label="Close panel"
+                      className="grid h-8 w-8 place-items-center rounded-md text-muted-foreground hover:bg-accent/10 hover:text-foreground"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
                   </div>
-                  <button
-                    onClick={() => setIsSidePanelOpen(false)}
-                    aria-label="Close panel"
-                    className="grid h-8 w-8 place-items-center rounded-md text-muted-foreground hover:bg-accent/10 hover:text-foreground"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
+                  {isAuthenticated && (
+                    <div className="relative mt-3">
+                      <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                      <input
+                        value={fileSearch}
+                        onChange={(e) => setFileSearch(e.target.value)}
+                        placeholder="Search files"
+                        className="h-9 w-full rounded-md border border-border bg-background pl-9 pr-3 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-ring/40"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex-1 overflow-y-auto p-4">
@@ -423,9 +551,21 @@ function EditorPage() {
                         </p>
                       </div>
                     </div>
+                  ) : filteredFiles.length === 0 ? (
+                    <div className="grid h-full place-items-center text-center">
+                      <div>
+                        <div className="mx-auto grid h-12 w-12 place-items-center rounded-xl bg-muted text-muted-foreground">
+                          <Search className="h-6 w-6" />
+                        </div>
+                        <h3 className="mt-4 text-base font-semibold">No matching files</h3>
+                        <p className="mt-1 text-sm text-muted-foreground">
+                          Try a different name or extension.
+                        </p>
+                      </div>
+                    </div>
                   ) : (
                     <ul className="space-y-2">
-                      {files.map((file) => (
+                      {filteredFiles.map((file) => (
                         <motion.li
                           key={file._id}
                           initial={{ opacity: 0, y: 6 }}

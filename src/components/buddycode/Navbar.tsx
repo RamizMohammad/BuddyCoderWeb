@@ -1,9 +1,10 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
-import { Code2, LogIn, LogOut, Menu, Sparkles, UserPlus, X } from "lucide-react";
+import { LogIn, LogOut, Menu, Sparkles, UserPlus, X } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
+import { LogoMark } from "@/components/buddycode/LogoMark";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -22,9 +23,7 @@ export function Navbar() {
       <div className="glass border-b border-border/60">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
           <Link to="/" className="group flex items-center gap-2.5">
-            <span className="relative grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-primary to-accent shadow-lg ring-1 ring-white/10 transition-transform group-hover:scale-105">
-              <Code2 className="h-5 w-5 text-white" />
-            </span>
+            <LogoMark />
             <span className="text-lg font-semibold tracking-tight">
               Buddy<span className="text-gradient-brand">Code</span>
             </span>
