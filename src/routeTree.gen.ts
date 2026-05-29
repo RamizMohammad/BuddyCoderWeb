@@ -10,8 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as PythonRouteImport } from './routes/python'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as JavascriptRouteImport } from './routes/javascript'
+import { Route as JavaRouteImport } from './routes/java'
 import { Route as EditorRouteImport } from './routes/editor'
+import { Route as CppRouteImport } from './routes/cpp'
+import { Route as CRouteImport } from './routes/c'
 import { Route as IndexRouteImport } from './routes/index'
 
 const RegisterRoute = RegisterRouteImport.update({
@@ -19,14 +24,39 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PythonRoute = PythonRouteImport.update({
+  id: '/python',
+  path: '/python',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JavascriptRoute = JavascriptRouteImport.update({
+  id: '/javascript',
+  path: '/javascript',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JavaRoute = JavaRouteImport.update({
+  id: '/java',
+  path: '/java',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EditorRoute = EditorRouteImport.update({
   id: '/editor',
   path: '/editor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CppRoute = CppRouteImport.update({
+  id: '/cpp',
+  path: '/cpp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CRoute = CRouteImport.update({
+  id: '/c',
+  path: '/c',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,35 +67,83 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/c': typeof CRoute
+  '/cpp': typeof CppRoute
   '/editor': typeof EditorRoute
+  '/java': typeof JavaRoute
+  '/javascript': typeof JavascriptRoute
   '/login': typeof LoginRoute
+  '/python': typeof PythonRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/c': typeof CRoute
+  '/cpp': typeof CppRoute
   '/editor': typeof EditorRoute
+  '/java': typeof JavaRoute
+  '/javascript': typeof JavascriptRoute
   '/login': typeof LoginRoute
+  '/python': typeof PythonRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/c': typeof CRoute
+  '/cpp': typeof CppRoute
   '/editor': typeof EditorRoute
+  '/java': typeof JavaRoute
+  '/javascript': typeof JavascriptRoute
   '/login': typeof LoginRoute
+  '/python': typeof PythonRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/editor' | '/login' | '/register'
+  fullPaths:
+    | '/'
+    | '/c'
+    | '/cpp'
+    | '/editor'
+    | '/java'
+    | '/javascript'
+    | '/login'
+    | '/python'
+    | '/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/editor' | '/login' | '/register'
-  id: '__root__' | '/' | '/editor' | '/login' | '/register'
+  to:
+    | '/'
+    | '/c'
+    | '/cpp'
+    | '/editor'
+    | '/java'
+    | '/javascript'
+    | '/login'
+    | '/python'
+    | '/register'
+  id:
+    | '__root__'
+    | '/'
+    | '/c'
+    | '/cpp'
+    | '/editor'
+    | '/java'
+    | '/javascript'
+    | '/login'
+    | '/python'
+    | '/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CRoute: typeof CRoute
+  CppRoute: typeof CppRoute
   EditorRoute: typeof EditorRoute
+  JavaRoute: typeof JavaRoute
+  JavascriptRoute: typeof JavascriptRoute
   LoginRoute: typeof LoginRoute
+  PythonRoute: typeof PythonRoute
   RegisterRoute: typeof RegisterRoute
 }
 
@@ -78,6 +156,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/python': {
+      id: '/python'
+      path: '/python'
+      fullPath: '/python'
+      preLoaderRoute: typeof PythonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -85,11 +170,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/javascript': {
+      id: '/javascript'
+      path: '/javascript'
+      fullPath: '/javascript'
+      preLoaderRoute: typeof JavascriptRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/java': {
+      id: '/java'
+      path: '/java'
+      fullPath: '/java'
+      preLoaderRoute: typeof JavaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/editor': {
       id: '/editor'
       path: '/editor'
       fullPath: '/editor'
       preLoaderRoute: typeof EditorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cpp': {
+      id: '/cpp'
+      path: '/cpp'
+      fullPath: '/cpp'
+      preLoaderRoute: typeof CppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/c': {
+      id: '/c'
+      path: '/c'
+      fullPath: '/c'
+      preLoaderRoute: typeof CRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -104,10 +217,25 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CRoute: CRoute,
+  CppRoute: CppRoute,
   EditorRoute: EditorRoute,
+  JavaRoute: JavaRoute,
+  JavascriptRoute: JavascriptRoute,
   LoginRoute: LoginRoute,
+  PythonRoute: PythonRoute,
   RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
