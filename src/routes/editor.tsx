@@ -103,7 +103,9 @@ function EditorPage() {
   const checkBackendConnection = async () => {
     try {
       const response = await fetch(`${API_BASE}/health`);
-      setIsConnected(response.ok);
+      if (!response.ok) { setIsConnected(false); return; }
+      const data = await response.json();
+      setIsConnected(data.active === true);
     } catch (err) {
       console.error("[health check failed]", err);
       setIsConnected(false);
