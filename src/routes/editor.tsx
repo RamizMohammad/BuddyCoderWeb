@@ -89,7 +89,12 @@ function EditorPage() {
      error handling, and routing decisions are unchanged.
      ============================================================ */
 
-  useEffect(() => { checkBackendConnection(); }, []);
+  useEffect(() => {
+    checkBackendConnection();
+    const interval = setInterval(checkBackendConnection, 15000);
+    return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   useEffect(() => {
     if (isAuthenticated && isSidePanelOpen) fetchFiles();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -98,8 +103,9 @@ function EditorPage() {
   const checkBackendConnection = async () => {
     try {
       const response = await fetch(`${API_BASE}/health`);
-      if (response.ok) setIsConnected(true);
-    } catch {
+      setIsConnected(response.ok);
+    } catch (err) {
+      console.error("[health check failed]", err);
       setIsConnected(false);
     }
   };
