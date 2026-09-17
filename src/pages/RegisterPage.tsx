@@ -29,7 +29,7 @@ const RegisterPage: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('https://api.server.buddycode.online/register', {
+      const response = await fetch('https://api.cloudide.space/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

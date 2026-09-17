@@ -23,7 +23,7 @@ const LoginPage: React.FC = () => {
       formData.append('username', email);
       formData.append('password', password);
 
-      const response = await fetch('https://api.server.buddycode.online/login', {
+      const response = await fetch('https://api.cloudide.space/login', {
         method: 'POST',
         body: formData,
       });

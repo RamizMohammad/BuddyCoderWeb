@@ -31,7 +31,7 @@ const FilesPage: React.FC = () => {
     setError('');
 
     try {
-      const response = await fetch('https://api.server.buddycode.online/files', {
+      const response = await fetch('https://api.cloudide.space/files', {
         headers: {
           'Authorization': `Bearer ${user?.token}`,
         },
@@ -52,7 +52,7 @@ const FilesPage: React.FC = () => {
 
   const handleDownload = async (fileId: number, filename: string) => {
     try {
-      const response = await fetch(`https://api.server.buddycode.online/download/${fileId}`, {
+      const response = await fetch(`https://api.cloudide.space/download/${fileId}`, {
         headers: {
           'Authorization': `Bearer ${user?.token}`,
         },
@@ -97,7 +97,7 @@ const FilesPage: React.FC = () => {
       <SeoTags
         title="My Files - BuddyCode"
         description="Manage your saved code files on BuddyCode"
-        url="https://api.server.buddycode.online/files"
+        url="https://api.cloudide.space/files"
       />
 
       <header className="bg-surface border-b border-gray-700 px-6 py-4 shadow-lg">

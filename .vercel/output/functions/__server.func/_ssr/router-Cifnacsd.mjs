@@ -1,30 +1,30 @@
-import { Q as QueryClient } from "../_libs/tanstack__query-core.mjs";
-import { Q as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
-import { b as createRouter, a as createRootRouteWithContext, d as useRouter, L as Link, O as Outlet, H as HeadContent, S as Scripts, c as createFileRoute, l as lazyRouteComponent, e as useRouterState } from "../_libs/tanstack__react-router.mjs";
-import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { T as Toaster$1 } from "../_libs/sonner.mjs";
-import { S as Slot } from "../_libs/radix-ui__react-slot.mjs";
+import "async_hooks";
+import "crypto";
+import "node:stream";
+import "node:stream/web";
+import "stream";
+import "util";
 import { c as cva } from "../_libs/class-variance-authority.mjs";
 import { c as clsx } from "../_libs/clsx.mjs";
-import { t as twMerge } from "../_libs/tailwind-merge.mjs";
-import { H as Wrench, u as Settings, h as Coffee, Z as Zap, F as FileCode, a as ArrowRight, g as CodeXml, q as LogOut, w as Sparkles, p as LogIn, U as UserPlus, X, M as Menu } from "../_libs/lucide-react.mjs";
-import { A as AnimatePresence, m as motion } from "../_libs/framer-motion.mjs";
-import "../_libs/tanstack__router-core.mjs";
-import "../_libs/tanstack__history.mjs";
 import "../_libs/cookie-es.mjs";
-import "../_libs/seroval.mjs";
-import "../_libs/seroval-plugins.mjs";
-import "node:stream/web";
-import "node:stream";
-import "../_libs/react-dom.mjs";
-import "util";
-import "crypto";
-import "async_hooks";
-import "stream";
+import { A as AnimatePresence, m as motion } from "../_libs/framer-motion.mjs";
 import "../_libs/isbot.mjs";
-import "../_libs/radix-ui__react-compose-refs.mjs";
+import { a as ArrowRight, g as CodeXml, h as Coffee, F as FileCode, p as LogIn, q as LogOut, M as Menu, u as Settings, w as Sparkles, U as UserPlus, H as Wrench, X, Z as Zap } from "../_libs/lucide-react.mjs";
 import "../_libs/motion-dom.mjs";
 import "../_libs/motion-utils.mjs";
+import "../_libs/radix-ui__react-compose-refs.mjs";
+import { S as Slot } from "../_libs/radix-ui__react-slot.mjs";
+import "../_libs/react-dom.mjs";
+import { j as jsxRuntimeExports, r as reactExports } from "../_libs/react.mjs";
+import "../_libs/seroval-plugins.mjs";
+import "../_libs/seroval.mjs";
+import { T as Toaster$1 } from "../_libs/sonner.mjs";
+import { t as twMerge } from "../_libs/tailwind-merge.mjs";
+import "../_libs/tanstack__history.mjs";
+import { Q as QueryClient } from "../_libs/tanstack__query-core.mjs";
+import { Q as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
+import { H as HeadContent, L as Link, O as Outlet, S as Scripts, c as createFileRoute, a as createRootRouteWithContext, b as createRouter, l as lazyRouteComponent, d as useRouter, e as useRouterState } from "../_libs/tanstack__react-router.mjs";
+import "../_libs/tanstack__router-core.mjs";
 const appCss = "/assets/styles-ClyvPlgN.css";
 function reportLovableError(error, context = {}) {
   if (typeof window === "undefined") return;
@@ -68,7 +68,7 @@ function useAuth() {
   if (!ctx) throw new Error("useAuth must be used within AuthProvider");
   return ctx;
 }
-const API_BASE = "https://api.server.buddycode.online";
+const API_BASE = "https://api.cloudide.space";
 const Toaster = ({ ...props }) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     Toaster$1,
@@ -686,3 +686,4 @@ export {
   router as r,
   useAuth as u
 };
+
