@@ -49,4 +49,4 @@ export function useAuth() {
   return ctx;
 }
 
-export const API_BASE = "https://api.server.buddycode.online";
+export const API_BASE = "https://api.cloudide.space";
